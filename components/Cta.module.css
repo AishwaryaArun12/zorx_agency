@@ -1,0 +1,120 @@
+.section {
+  padding: clamp(4.5rem, 10vw, 8.5rem) clamp(1.25rem, 4vw, 3.5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(20, 122, 51, 0.18), transparent 55%);
+}
+
+.index {
+  color: var(--green);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-bottom: 1.4rem;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.heading :global(.anim-word-wrap) {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.heading :global(.anim-word) {
+  display: inline-block;
+}
+
+.lead {
+  max-width: 34rem;
+  margin: 1.4rem 0 2.4rem;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.2rem;
+  max-width: 720px;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 0.7rem 0;
+  outline: none;
+}
+
+.form input:focus,
+.form textarea:focus {
+  border-bottom-color: var(--green);
+}
+
+.form button {
+  grid-column: 1 / -1;
+  margin-top: 0.6rem;
+  justify-self: start;
+  padding: 0.95rem 1.4rem;
+  border: 0;
+  background: var(--green);
+  color: #fff;
+  font: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.form button:hover {
+  background: var(--green-bright);
+  transform: translateY(-2px);
+}
+
+.alt {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.alt:hover {
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+}

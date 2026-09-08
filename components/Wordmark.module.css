@@ -1,0 +1,50 @@
+.mark {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  line-height: 1;
+}
+
+.zorx {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.18em;
+  line-height: 0.9;
+}
+
+.sm .zorx {
+  font-size: 1.35rem;
+}
+
+.md .zorx {
+  font-size: 2rem;
+}
+
+.lg .zorx {
+  font-size: clamp(3.2rem, 12vw, 8rem);
+}
+
+.lg .tag {
+  margin-top: 0.7rem;
+  font-size: clamp(0.55rem, 1.4vw, 0.85rem);
+  letter-spacing: 0.42em;
+}
+
+.tag {
+  margin-top: 0.35rem;
+  font-size: 0.42rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.78;
+}
+
+.white {
+  color: #fff;
+}
+
+.green {
+  color: var(--green);
+}

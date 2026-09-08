@@ -1,0 +1,59 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem);
+  background: #000;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.wipe {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(20, 122, 51, 0.28), transparent 55%),
+    #000;
+  pointer-events: none;
+}
+
+.brand {
+  position: relative;
+  margin: auto 0;
+}
+
+.meta {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.25rem;
+  align-items: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.track {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  width: 100%;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.percent {
+  font-variant-numeric: tabular-nums;
+  min-width: 3.2ch;
+  text-align: right;
+}
