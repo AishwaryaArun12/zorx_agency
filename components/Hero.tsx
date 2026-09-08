@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePageReady } from "@/components/AppShell";
 import { getGsap, prefersReducedMotion, wrapChars, wrapWords } from "@/lib/gsap";
 import styles from "./Hero.module.css";
+import ModelScene from "./ModelScene";
 
 export function Hero() {
   const ready = usePageReady();
@@ -65,7 +66,11 @@ export function Hero() {
   return (
     <section id="top" ref={rootRef} className={styles.hero}>
       <div className={styles.grid} />
-      <div ref={visualRef} className={styles.orb} aria-hidden="true" />
+      <div ref={visualRef} className={styles.orb} aria-hidden="true">
+        <div style={{ width: "100%", height: "100%" }}>
+          <ModelScene />
+        </div>
+      </div>
       <div className={styles.inner}>
         <p className={styles.kicker}>Digital Marketing Agency · Dubai</p>
         <h1 ref={titleRef} className={styles.title}>
