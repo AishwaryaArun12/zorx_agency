@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePageReady } from "@/components/AppShell";
 import { projects } from "@/lib/content";
 import { getGsap, prefersReducedMotion, fadeUpIn, slideWordsIn } from "@/lib/gsap";
 import styles from "./Work.module.css";
 
 export function Work() {
+  const ready = usePageReady();
   const rootRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
+    if (!ready) return;
     const root = rootRef.current;
     const heading = headingRef.current;
     if (!root || !heading) return;
@@ -37,7 +40,7 @@ export function Work() {
         );
       }
     });
-  }, []);
+  }, [ready]);
 
   return (
     <section id="work" ref={rootRef} className={styles.section}>

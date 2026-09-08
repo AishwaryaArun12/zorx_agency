@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactLenis, useLenis } from "lenis/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getGsap } from "@/lib/gsap";
 
 function LenisScrollTrigger() {
@@ -22,6 +22,20 @@ function LenisScrollTrigger() {
 }
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  if (reduced) {
+    return <>{children}</>;
+  }
+
   return (
     <ReactLenis root options={{ lerp: 0.09, duration: 1.15 }}>
       <LenisScrollTrigger />

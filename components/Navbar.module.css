@@ -75,6 +75,14 @@
   transition: transform 0.3s ease;
 }
 
+.menu[aria-expanded="true"] span:first-child {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu[aria-expanded="true"] span:last-child {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 @media (max-width: 860px) {
   .menu {
     display: block;

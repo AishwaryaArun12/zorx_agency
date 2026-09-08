@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePageReady } from "@/components/AppShell";
 import { getGsap, prefersReducedMotion, fadeUpIn, slideWordsIn } from "@/lib/gsap";
 import styles from "./About.module.css";
 
 export function About() {
+  const ready = usePageReady();
   const rootRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!ready) return;
     const root = rootRef.current;
     const heading = headingRef.current;
     const frame = frameRef.current;
@@ -55,7 +58,7 @@ export function About() {
         scrub: true,
       },
     });
-  }, []);
+  }, [ready]);
 
   return (
     <section id="about" ref={rootRef} className={styles.section}>

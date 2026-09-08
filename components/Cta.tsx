@@ -1,20 +1,23 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { usePageReady } from "@/components/AppShell";
 import { contact } from "@/lib/content";
 import { slideWordsIn } from "@/lib/gsap";
 import styles from "./Cta.module.css";
 
 export function Cta() {
+  const ready = usePageReady();
   const rootRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
+    if (!ready) return;
     const heading = headingRef.current;
     if (!heading) return;
     slideWordsIn(heading);
-  }, []);
+  }, [ready]);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

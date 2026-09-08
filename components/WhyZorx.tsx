@@ -1,21 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePageReady } from "@/components/AppShell";
 import { reasons } from "@/lib/content";
 import { fadeUpIn, slideWordsIn } from "@/lib/gsap";
 import styles from "./WhyZorx.module.css";
 
 export function WhyZorx() {
+  const ready = usePageReady();
   const rootRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
+    if (!ready) return;
     const root = rootRef.current;
     const heading = headingRef.current;
     if (!root || !heading) return;
     slideWordsIn(heading);
     fadeUpIn(root, root.querySelectorAll("[data-item]"), { x: 0 });
-  }, []);
+  }, [ready]);
 
   return (
     <section id="why" ref={rootRef} className={styles.section}>

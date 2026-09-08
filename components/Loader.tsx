@@ -20,6 +20,7 @@ export function Loader({ onComplete }: { onComplete: () => void }) {
 
     const finish = () => {
       root.setAttribute("aria-hidden", "true");
+      root.style.pointerEvents = "none";
       onComplete();
     };
 

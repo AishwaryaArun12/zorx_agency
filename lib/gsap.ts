@@ -101,13 +101,17 @@ export function slideWordsIn(heading: HTMLElement) {
 
 export function fadeUpIn(trigger: Element, targets: gsap.TweenTarget, vars?: gsap.TweenVars) {
   const { gsap, ScrollTrigger } = getGsap();
-  if (prefersReducedMotion()) return;
+  if (prefersReducedMotion()) {
+    gsap.set(targets, { y: 0, opacity: 1, clearProps: "transform" });
+    return;
+  }
 
   const tween = gsap.fromTo(
     targets,
-    { y: 40 },
+    { y: 40, opacity: 0 },
     {
       y: 0,
+      opacity: 1,
       duration: 0.9,
       ease: "power3.out",
       stagger: 0.08,
