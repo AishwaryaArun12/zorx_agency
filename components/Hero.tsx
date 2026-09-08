@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import { usePageReady } from "@/components/AppShell";
 import { getGsap, prefersReducedMotion, wrapChars, wrapWords } from "@/lib/gsap";
 import styles from "./Hero.module.css";
-import ModelScene from "./ModelScene";
+import dynamic from "next/dynamic";
+const ModelScene = dynamic(() => import("./ModelScene"), { ssr: false, loading: () => null });
 
 export function Hero() {
   const ready = usePageReady();
