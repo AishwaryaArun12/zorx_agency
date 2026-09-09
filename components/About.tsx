@@ -11,6 +11,7 @@ export function About() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  const copyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ready) return;
@@ -18,7 +19,8 @@ export function About() {
     const heading = headingRef.current;
     const frame = frameRef.current;
     const image = imageRef.current;
-    if (!root || !heading || !frame || !image) return;
+    const copyColumn = copyRef.current;
+    if (!root || !heading || !frame || !image || !copyColumn) return;
 
     const { gsap } = getGsap();
     slideWordsIn(heading);
@@ -50,6 +52,7 @@ export function About() {
 
     gsap.to(image, {
       yPercent: 10,
+      rotateZ: 3,
       ease: "none",
       scrollTrigger: {
         trigger: root,
@@ -58,11 +61,56 @@ export function About() {
         scrub: true,
       },
     });
+
+    const moveFrameX = gsap.quickTo(frame, "rotateY", { duration: 0.8, ease: "power3.out" });
+    const moveFrameY = gsap.quickTo(frame, "rotateX", { duration: 0.8, ease: "power3.out" });
+    const moveImageX = gsap.quickTo(image, "x", { duration: 1, ease: "power3.out" });
+    const moveImageY = gsap.quickTo(image, "y", { duration: 1, ease: "power3.out" });
+    const onPointerMove = (event: PointerEvent) => {
+      const bounds = frame.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      moveFrameX(x * 4.5);
+      moveFrameY(y * -4.5);
+      moveImageX(x * -7);
+      moveImageY(y * -7);
+    };
+    const onPointerLeave = () => {
+      moveFrameX(0);
+      moveFrameY(0);
+      moveImageX(0);
+      moveImageY(0);
+    };
+
+    frame.addEventListener("pointermove", onPointerMove);
+    frame.addEventListener("pointerleave", onPointerLeave);
+
+    gsap.fromTo(
+      copyColumn,
+      { y: 28, rotateX: 3, opacity: 0.55 },
+      {
+        y: 0,
+        rotateX: 0,
+        opacity: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: root,
+          start: "top 88%",
+          end: "top 42%",
+          scrub: 0.7,
+        },
+      },
+    );
+
+    return () => {
+      frame.removeEventListener("pointermove", onPointerMove);
+      frame.removeEventListener("pointerleave", onPointerLeave);
+    };
   }, [ready]);
 
   return (
     <section id="about" ref={rootRef} className={styles.section}>
-      <div className={styles.copy}>
+      <div ref={copyRef} className={styles.copy}>
         <p className={styles.index} data-reveal>
           01 — About
         </p>
@@ -82,9 +130,16 @@ export function About() {
       </div>
       <div ref={frameRef} className={styles.frame}>
         <div ref={imageRef} className={styles.visual} aria-hidden="true">
-          <span>DXB</span>
+          <div className={styles.prismPlane} />
+          <div className={styles.prismPlaneBack} />
+          <div className={styles.prismOrbit} />
+          <div className={styles.prismCore}>
+            <span className={styles.visualWord}>DXB</span>
+            <span className={styles.coreLine}>CREATIVE / PERFORMANCE</span>
+          </div>
+          <span className={styles.visualCoordinates}>25°N / 55°E</span>
+          <span className={styles.visualSignal}>ZORX / 01</span>
         </div>
-        <p className={styles.caption}>Gulf time. Global craft.</p>
       </div>
     </section>
   );

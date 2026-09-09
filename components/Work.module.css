@@ -1,11 +1,36 @@
 .section {
+  position: relative;
   padding: clamp(4.5rem, 10vw, 8.5rem) clamp(1.25rem, 4vw, 3.5rem);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(20, 122, 51, 0.16), transparent 24rem),
+    linear-gradient(135deg, transparent 0 48%, rgba(255, 255, 255, 0.025) 48.1% 48.2%, transparent 48.3%);
+}
+
+.section::before {
+  content: "SELECTED / 2025";
+  position: absolute;
+  top: 2rem;
+  right: clamp(1.25rem, 4vw, 3.5rem);
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
 }
 
 .head {
   max-width: 46rem;
   margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  position: relative;
+}
+
+.head::after {
+  content: "";
+  display: block;
+  width: min(100%, 28rem);
+  height: 1px;
+  margin-top: 1.8rem;
+  background: linear-gradient(90deg, var(--green-bright), transparent);
 }
 
 .index {
@@ -38,10 +63,19 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.4rem 1.2rem;
+  perspective: 1100px;
 }
 
 .card {
+  position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: filter 0.4s ease;
+}
+
+.card:hover {
+  filter: brightness(1.08);
 }
 
 .media {
@@ -49,12 +83,70 @@
   height: 280px;
   overflow: hidden;
   border-radius: 2px;
+  isolation: isolate;
+  --shine-x: 50%;
+  --shine-y: 50%;
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.22);
+  transform-style: preserve-3d;
+}
+
+.media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 10rem at var(--shine-x) var(--shine-y),
+    rgba(255, 255, 255, 0.22),
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card:hover .media::before {
+  opacity: 1;
 }
 
 .art {
   position: absolute;
   inset: -8%;
   will-change: transform;
+  transition: filter 0.5s ease;
+}
+
+.card:hover .art {
+  filter: saturate(1.22) contrast(1.06);
+}
+
+.cardIndex {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+}
+
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  height: 1px;
+  transform: scaleX(0.2);
+  transform-origin: left;
+  background: #9affb2;
+  box-shadow: 0 0 1rem rgba(154, 255, 178, 0.8);
+  transition: transform 0.6s ease;
+}
+
+.card:hover .scanline {
+  transform: scaleX(1);
 }
 
 .rose .art {
@@ -102,8 +194,9 @@
   padding: 1.2rem;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.72));
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(18px);
   transition: opacity 0.35s ease, transform 0.35s ease;
+  z-index: 3;
 }
 
 .card:hover .hover {
@@ -129,10 +222,17 @@
   justify-content: space-between;
   gap: 1rem;
   padding: 0.9rem 0 0.3rem;
+  transform: translateZ(24px);
 }
 
 .meta h3 {
   font-size: 1.05rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .meta h3 {
+  color: #9affb2;
+  transform: translateX(0.3rem);
 }
 
 .meta p {
@@ -147,5 +247,13 @@
 
   .media {
     height: 220px;
+  }
+
+  .card:hover {
+    filter: none;
+  }
+
+  .section::before {
+    top: 1.2rem;
   }
 }

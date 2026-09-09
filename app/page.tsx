@@ -1,11 +1,11 @@
 import { About } from "@/components/About";
-import { Cta } from "@/components/Cta";
+import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { Navbar } from "@/components/Navbar";
 import { Services } from "@/components/Services";
 import { WhyZorx } from "@/components/WhyZorx";
-import { Work } from "@/components/Work";
+import { Portfolio } from "@/components/Portfolio";
 
 export default function Home() {
   return (
@@ -16,8 +16,8 @@ export default function Home() {
         <About />
         <Services />
         <WhyZorx />
-        <Work />
-        <Cta />
+        <Portfolio />
+        <Contact />
       </main>
       <Footer />
     </>

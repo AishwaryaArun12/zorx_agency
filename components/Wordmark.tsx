@@ -23,15 +23,16 @@ export function Wordmark({
         role="img"
         aria-label={showTagline ? "ZORX — Fueling Brands Growth" : "ZORX"}
       >
-        <g fill="none" stroke={fill} strokeLinecap="square">
-          <path strokeWidth="14" d="M16 22h92L16 88h92" />
-          <circle cx="186" cy="55" r="36" strokeWidth="14" />
-          <path
-            strokeWidth="14"
-            d="M250 91V19h28c22 0 38 12 38 32 0 16-10 27-26 31l32 29"
-          />
-          <path strokeWidth="12" d="M372 22l80 70M452 22l-80 70" />
-        </g>
+        <image
+          href={color === "green" ? "/brand/zorx-green.png" : "/brand/zorx-white.png"}
+          x="0"
+          y="0"
+          width="220"
+          height={showTagline ? "110" : "80"}
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        />
+        
         {showTagline ? (
           <text
             x="260"

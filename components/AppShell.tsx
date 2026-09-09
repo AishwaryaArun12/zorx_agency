@@ -8,7 +8,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Loader } from "@/components/Loader";
+import { PageLoader } from "@/components/PageLoader";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { getGsap } from "@/lib/gsap";
 
@@ -32,7 +33,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <ReadyContext.Provider value={value}>
-      <Loader onComplete={onComplete} />
+      <PageLoader onComplete={onComplete} />
+      <ScrollProgress />
       <SmoothScroll>{children}</SmoothScroll>
     </ReadyContext.Provider>
   );

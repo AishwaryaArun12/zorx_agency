@@ -1,10 +1,14 @@
 .section {
+  position: relative;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: clamp(2rem, 6vw, 6rem);
   align-items: center;
   padding: clamp(4.5rem, 10vw, 8.5rem) clamp(1.25rem, 4vw, 3.5rem);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  perspective: 1400px;
+  overflow: hidden;
+  background: radial-gradient(circle at 78% 50%, rgba(20, 122, 51, 0.08), transparent 28rem);
 }
 
 .index {
@@ -47,25 +51,132 @@
 
 .frame {
   position: relative;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  padding: 1.5rem 0 1.5rem 1rem;
 }
 
 .visual {
-  min-height: 420px;
-  border-radius: 2px;
-  background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55)),
-    linear-gradient(135deg, #0b2a16 0%, #147a33 38%, #07140c 70%, #c9a24a 140%);
+  min-height: 460px;
+  clip-path: polygon(13% 0, 83% 4%, 100% 24%, 92% 82%, 70% 100%, 16% 94%, 0 67%, 5% 18%);
+  background: #07140c;
   display: grid;
   place-items: center;
   overflow: hidden;
+  position: relative;
   will-change: transform;
+  transform-style: preserve-3d;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: box-shadow 0.5s ease, border-color 0.5s ease;
 }
 
-.visual span {
+.frame:hover .visual {
+  box-shadow: 0 2rem 4rem rgba(20, 122, 51, 0.2), inset 0 0 0 1px rgba(170, 255, 185, 0.35);
+}
+
+.visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(122, 255, 148, 0.2), transparent 38%),
+    radial-gradient(circle at 68% 35%, rgba(104, 255, 135, 0.34), transparent 28%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 14px);
+  opacity: 0.78;
+  transform: translateZ(4px) scale(1.08);
+  clip-path: inherit;
+}
+
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 1.4rem;
+  border: 1px solid rgba(170, 255, 185, 0.28);
+  clip-path: polygon(15% 4%, 80% 8%, 94% 27%, 86% 78%, 67% 94%, 19% 89%, 6% 64%, 11% 22%);
+  box-shadow: inset 0 0 4rem rgba(20, 122, 51, 0.2);
+  transform: translateZ(22px);
+}
+
+.prismPlane,
+.prismPlaneBack {
+  position: absolute;
+  width: 54%;
+  height: 68%;
+  border: 1px solid rgba(169, 255, 184, 0.42);
+  background: linear-gradient(135deg, rgba(178, 255, 190, 0.12), rgba(0, 0, 0, 0.08));
+  transform-style: preserve-3d;
+  clip-path: polygon(22% 0, 100% 12%, 78% 100%, 0 88%);
+}
+
+.prismPlane {
+  transform: translate3d(-12%, 5%, 28px) rotateY(-22deg) rotateZ(-8deg);
+  animation: prism-front 7s ease-in-out infinite alternate;
+}
+
+.prismPlaneBack {
+  opacity: 0.5;
+  transform: translate3d(18%, -10%, 2px) rotateY(26deg) rotateZ(12deg);
+  animation: prism-back 9s ease-in-out infinite alternate;
+}
+
+.prismOrbit {
+  position: absolute;
+  width: 70%;
+  height: 28%;
+  border: 1px solid rgba(211, 255, 218, 0.66);
+  border-radius: 50%;
+  transform: translateZ(60px) rotateX(66deg) rotateZ(-16deg);
+  box-shadow: 0 0 1.5rem rgba(91, 255, 120, 0.42);
+  animation: prism-orbit 6s linear infinite;
+}
+
+.prismCore {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+  transform: translateZ(74px);
+  animation: prism-core 4s ease-in-out infinite alternate;
+}
+
+.visualWord {
+  position: relative;
+  z-index: 2;
   font-family: var(--font-display);
   font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: 0 0 2rem rgba(154, 255, 178, 0.22);
+  transform: none;
+}
+
+.coreLine {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+}
+
+.visualCoordinates {
+  position: absolute;
+  top: 3rem;
+  right: 3rem;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.62rem;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.18);
+}
+
+.visualSignal {
+  position: absolute;
+  left: 3rem;
+  bottom: 3rem;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
 .caption {
@@ -76,12 +187,54 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .visual,
+  .frame {
+    transform: none !important;
+  }
+
+  .prismPlane,
+  .prismPlaneBack,
+  .prismOrbit,
+  .prismCore {
+    animation: none;
+  }
+}
+
+@keyframes prism-front {
+  to {
+    transform: translate3d(-4%, 8%, 42px) rotateY(-14deg) rotateZ(-3deg);
+  }
+}
+
+@keyframes prism-back {
+  to {
+    transform: translate3d(25%, -4%, 12px) rotateY(18deg) rotateZ(18deg);
+  }
+}
+
+@keyframes prism-orbit {
+  to {
+    transform: translateZ(60px) rotateX(66deg) rotateZ(344deg);
+  }
+}
+
+@keyframes prism-core {
+  to {
+    transform: translate3d(0, -10px, 84px);
+  }
+}
+
 @media (max-width: 900px) {
   .section {
     grid-template-columns: 1fr;
   }
 
   .visual {
-    min-height: 280px;
+    min-height: 330px;
+  }
+
+  .frame {
+    padding: 0;
   }
 }
