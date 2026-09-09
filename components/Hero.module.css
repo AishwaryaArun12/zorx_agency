@@ -213,6 +213,7 @@
   letter-spacing: 0.06em;
   line-height: 0.82;
   overflow: hidden;
+  white-space: nowrap;
   text-shadow:
     0 0 0.02em rgba(255, 255, 255, 0.8),
     0 0 2.5rem rgba(20, 122, 51, 0.18);
@@ -347,6 +348,11 @@
 }
 
 @media (max-width: 700px) {
+  .title {
+    font-size: clamp(2.8rem, 17vw, 5rem);
+    letter-spacing: 0.03em;
+  }
+
   .scrollHint {
     display: none;
   }
